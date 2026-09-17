@@ -209,6 +209,42 @@ html, body {
   gap: 10px;
 }
 
+@media (orientation: landscape) {
+  .controls { flex-wrap: wrap; justify-content: center; }
+}
+
+.pen-toggle {
+  display: flex;
+  gap: 2px;
+  background: rgba(251,250,246,0.10);
+  border-radius: 999px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.pen-option {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--paper);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  opacity: 0.45;
+}
+
+.pen-option svg { width: 20px; height: 20px; fill: currentColor; }
+
+.pen-option.is-active {
+  opacity: 1;
+  background: rgba(251,250,246,0.16);
+}
+
 .ctrl-btn {
   appearance: none;
   border: none;

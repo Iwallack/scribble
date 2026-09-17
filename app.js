@@ -5,7 +5,9 @@
   // Config — the few numbers you're likely to want to tune later.
   // ---------------------------------------------------------------
   const SKETCH_SECONDS = 30;     // fixed duration per sketch (v1: not user-configurable)
-  const PEN_WIDTH_RATIO = 0.0055; // pen width as a fraction of the canvas size
+  // Two pens, like having a fine pen and a fat-head sharpie on the table —
+  // switchable mid-session, independent of which sketch you're on.
+  const PEN_WIDTH_RATIOS = { small: 0.011, big: 0.09 };
   const PDF_COLUMNS = 4;
   const TOOLBAR_THICKNESS = 112; // px — must match the toolbar column/strip size in styles.css
   const OUTER_GUTTER = 24;       // px — breathing room around the square canvas
@@ -37,7 +39,8 @@
   const ctx = canvas.getContext("2d", { desynchronized: true });
 
   let dpr = Math.max(1, window.devicePixelRatio || 1);
-  let penWidth = 4;
+  let penWidths = { small: 4, big: 12 }; // recomputed in setupCanvasOnce() once the canvas size is known
+  let penSize = "small"; // "small" | "big" — persists across sketches within a session, like picking up a different pen
   let hasInk = false; // has anything been drawn on the CURRENT sketch
   let canvasSetUp = false; // the canvas is sized ONCE per session, never resized after
 
@@ -77,10 +80,21 @@
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     ctx.strokeStyle = "#111111";
-    penWidth = Math.max(2, size * PEN_WIDTH_RATIO);
-    ctx.lineWidth = penWidth;
+    penWidths = {
+      small: Math.max(4, size * PEN_WIDTH_RATIOS.small),
+      big: Math.max(30, size * PEN_WIDTH_RATIOS.big),
+    };
+    ctx.lineWidth = penWidths[penSize];
     clearCanvas();
     canvasSetUp = true;
+  }
+
+  function setPenSize(size) {
+    if (size !== "small" && size !== "big") return;
+    penSize = size;
+    ctx.lineWidth = penWidths[penSize];
+    document.getElementById("btn-pen-small").classList.toggle("is-active", size === "small");
+    document.getElementById("btn-pen-big").classList.toggle("is-active", size === "big");
   }
 
   function clearCanvas() {
@@ -108,10 +122,14 @@
     drawing = true;
     hasInk = true;
     [lastX, lastY] = pos(evt);
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(lastX + 0.01, lastY + 0.01); // ensure a dot renders on a simple tap
-    ctx.stroke();
+    if (penSize === "chisel") {
+      stampChisel(lastX, lastY);
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(lastX + 0.01, lastY + 0.01); // ensure a dot renders on a simple tap
+      ctx.stroke();
+    }
     canvas.setPointerCapture(evt.pointerId);
     evt.preventDefault();
   }
@@ -119,10 +137,14 @@
   function pointerMove(evt) {
     if (!drawing || evt.pointerId !== activePointerId) return;
     const [x, y] = pos(evt);
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    if (penSize === "chisel") {
+      drawChiselSegment(lastX, lastY, x, y);
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    }
     lastX = x; lastY = y;
     evt.preventDefault();
   }
@@ -250,6 +272,9 @@
   // ---------------------------------------------------------------
   // Controls
   // ---------------------------------------------------------------
+  document.getElementById("btn-pen-small").addEventListener("click", () => setPenSize("small"));
+  document.getElementById("btn-pen-big").addEventListener("click", () => setPenSize("big"));
+  document.getElementById("btn-pen-chisel").addEventListener("click", () => setPenSize("chisel"));
   document.getElementById("btn-start").addEventListener("click", startSession);
   document.getElementById("btn-pause").addEventListener("click", pauseSession);
   document.getElementById("btn-resume").addEventListener("click", resumeSession);

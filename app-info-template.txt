@@ -1,0 +1,98 @@
+SKETCHING APP — PROJECT INFO TEMPLATE
+Fill in what you can, skip what you don't know yet.
+
+THE CORE IDEA
+What's the one-sentence pitch? What problem does it solve that existing
+sketching apps (Procreate, GoodNotes, Freeform, paper) don't?
+
+It is an app for ideation not production. Forces rapid ideation and gives a document with all sketches organized at the end of the session.  
+
+
+THE GEHRY INSPIRATION
+What specifically about his approach to sketching do you want the app to
+capture? e.g. the looseness/gestural quality of his crumpled-paper sketches,
+sketching as thinking-in-motion rather than depicting a finished idea, rapid
+iteration across many small sketches, or the translation from rough gesture
+to 3D form. Naming the specific quality will shape a lot of design decisions.
+
+Sketches are scribbles, they should take 5 seconds and be part of the process - not come after the thinking. The act of sketching is thinking WITH the pen in your hand NOT thinking then sketching the thought.
+Essentially it is for the first round of sketching 
+
+
+WHO IT'S FOR
+You, specifically? Architects/designers generally? A broader "anyone who
+wants to think visually" audience?
+
+Designers, creatives
+
+
+CORE ACTIONS
+What does a user actually do in a session? e.g. draw with finger/pencil,
+flip through many quick pages, layer sketches on top of each other, capture
+a photo and sketch over it, voice-annotate, tag/organize sketches later.
+
+The main idea is this:
+Using many constraints to simplify the sketching process, this will be done by:
+Using a timer to force quick sketches
+2 pen options, big and small
+No eraser
+No undo
+MAYBE 1 color besides black
+Incredibly minimal UI
+Exports pdf with sketches organized and numbered
+
+
+MUST-HAVE V1 FEATURES VS. NICE-TO-HAVE LATER
+A short list of what "done" looks like for a first version, separate from
+your longer-term wishlist.
+
+Must-have:
+- timer that auto "clears" canvas - not clears but saves the sketch and empties the canvas for the next one
+- pdf export 4 columns, numbered for reference
+- pause session
+- next button to move on without waiting
+
+Nice-to-have later:
+- pen options (2 sizes MAYBE a color besides black)
+- canvas options (make yellow like tracing paper, add dot grid)
+- reference view, add a reference to the corner
+- noun view, like reference but with words to use as North Star during session
+- change 1 thing view, shows previous sketche to allow for the "change 1 thing" way of ideating
+- 
+
+
+FEEL / INTERACTION CONSTRAINTS
+Should it feel more like real paper (frictionless, no menus, minimal chrome)
+or more like a tool (layers panel, precision controls)? Any specific
+interactions you already picture (e.g. shake to clear, pinch to zoom
+between sketches)?
+
+As minimal as possible, im thinking a main menu and once you start a session there is no control except: pause, next, end.
+
+INPUT
+Finger only, Apple Pencil required/preferred, keyboard shortcuts for
+anything?
+
+Finger and stylus, for V1 no shortcuts 
+
+
+DATA / OUTPUT
+Does work need to be saved, exported (PDF/PNG), synced across devices,
+shared? Or is it fine if it's ephemeral/local-only for v1?
+
+It should be a pdf, when in doubt go with the most minimal, stripped back, constrained option
+
+
+TECH COMFORT
+Any preference or constraint on how it gets built (this affects what's
+actually buildable remotely vs. needing a Mac + Xcode)? Fine to say
+"no idea, tell me the options" here.
+
+No idea
+
+
+REFERENCES
+Any apps, sketches, or images that capture the vibe you're after —
+screenshots or links are great if you have them.
+
+None as of now
