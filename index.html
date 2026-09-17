@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Scribble</title>
+
+<!-- PWA / iPad home-screen behavior -->
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#111111" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-mobile-web-app-title" content="Scribble" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<link rel="icon" href="icons/favicon-32.png" />
+
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===================== MENU ===================== -->
+<section id="view-menu" class="view" aria-hidden="false">
+  <div class="menu-inner">
+    <h1 class="brand">Scribble</h1>
+    <p class="tagline">Draw with the pen, not before it.</p>
+    <button id="btn-start" class="btn-primary" type="button">Start Session</button>
+    <p class="hint">Each sketch gets ~<span id="menu-seconds">30</span> seconds.<br/>No undo. No eraser. Just go.</p>
+  </div>
+</section>
+
+<!-- ===================== SESSION ===================== -->
+<section id="view-session" class="view hidden" aria-hidden="true">
+  <div id="session-layout">
+
+    <div id="panel-top" class="panel">
+      <div id="sketch-counter" class="hud-label">1</div>
+      <div id="progress-track"><div id="progress-fill"></div></div>
+    </div>
+
+    <div id="canvas-wrap">
+      <canvas id="canvas"></canvas>
+      <div id="pause-overlay" class="pause-overlay hidden">
+        <div class="pause-inner">
+          <p>Paused</p>
+          <button id="btn-resume" class="btn-primary" type="button">Resume</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-controls" class="panel controls">
+      <button id="btn-pause" class="ctrl-btn" type="button" aria-label="Pause">
+        <svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+      </button>
+      <button id="btn-next" class="ctrl-btn" type="button" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polygon points="6,4 16,12 6,20"/><rect x="17" y="4" width="2.5" height="16"/></svg>
+      </button>
+      <button id="btn-end" class="ctrl-btn ctrl-btn-end" type="button" aria-label="End session">
+        <svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="1.5"/></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== DONE / EXPORT ===================== -->
+<section id="view-done" class="view hidden" aria-hidden="true">
+  <div class="menu-inner">
+    <h1 class="brand">Session complete</h1>
+    <p class="tagline"><span id="done-count">0</span> sketches captured</p>
+    <div id="done-status" class="hint">Preparing PDF&hellip;</div>
+    <button id="btn-export-again" class="btn-secondary hidden" type="button">Export PDF Again</button>
+    <button id="btn-new-session" class="btn-primary" type="button">New Session</button>
+  </div>
+</section>
+
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

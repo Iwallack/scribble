@@ -1,0 +1,261 @@
+:root {
+  --ink: #111111;
+  --paper: #fbfaf6;
+  --paper-line: #e7e3d8;
+  --muted: #8a8578;
+  --accent: #111111;
+  --danger: #a33b2c;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.view {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- Menu & Done screens ---------- */
+#view-menu, #view-done {
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-inner {
+  text-align: center;
+  padding: 32px;
+  max-width: 420px;
+}
+
+.brand {
+  color: var(--paper);
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 8px;
+}
+
+.tagline {
+  color: var(--paper);
+  opacity: 0.65;
+  font-size: 17px;
+  margin: 0 0 40px;
+}
+
+.btn-primary {
+  appearance: none;
+  border: none;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 600;
+  padding: 16px 40px;
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.btn-primary:active { opacity: 0.75; }
+
+.btn-secondary {
+  appearance: none;
+  border: 1.5px solid rgba(251,250,246,0.4);
+  background: transparent;
+  color: var(--paper);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 13px 32px;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-bottom: 14px;
+  touch-action: manipulation;
+}
+
+.hint {
+  color: var(--paper);
+  opacity: 0.45;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 28px;
+}
+
+#done-status { margin-top: 0; margin-bottom: 24px; }
+#done-count { font-weight: 600; opacity: 1; }
+
+/* ---------- Session screen ---------- */
+#view-session {
+  background: var(--ink);
+}
+
+/* Grid layout: reflows between a left toolbar (landscape) and
+   top/bottom strips (portrait). The canvas itself is a FIXED size,
+   computed once per session in app.js and never resized — only its
+   position in the grid changes on rotation. This is what keeps a
+   rotation from wiping the sketch or knocking the Pencil out of
+   calibration: the drawing buffer is never touched again after
+   the session starts. */
+#session-layout {
+  position: fixed;
+  inset: 0;
+  display: grid;
+}
+
+@media (orientation: landscape) {
+  #session-layout {
+    grid-template-columns: 112px 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "top    canvas"
+      ".      canvas"
+      "bottom canvas";
+  }
+  #panel-controls { flex-direction: column; }
+}
+
+@media (orientation: portrait) {
+  #session-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "top"
+      "canvas"
+      "bottom";
+  }
+  #panel-controls { flex-direction: row; }
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 10px;
+}
+
+#panel-top {
+  grid-area: top;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#panel-controls {
+  grid-area: bottom;
+  justify-content: center;
+}
+
+#canvas-wrap {
+  grid-area: canvas;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#canvas {
+  display: block;
+  background: var(--paper);
+  touch-action: none;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.3);
+}
+
+.hud-label {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--paper);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+#progress-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(251,250,246,0.15);
+  overflow: hidden;
+}
+
+#progress-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--paper);
+  opacity: 0.55;
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.ctrl-btn {
+  appearance: none;
+  border: none;
+  background: rgba(251,250,246,0.10);
+  color: var(--paper);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.ctrl-btn:active { opacity: 1; }
+
+.ctrl-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.ctrl-btn-end { background: rgba(224,110,90,0.18); color: #e88a76; }
+
+.pause-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  background: rgba(251,250,246,0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pause-inner { text-align: center; }
+
+.pause-inner p {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 20px;
+}
+
+.pause-inner .btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
